@@ -1,0 +1,20 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        options:
+          format: false
+        generate_for:
+          include:
+            - lib/models/*.dart
+            - lib/models/**/*.dart
+      json_serializable:
+        options:
+          explicit_to_json: true
+        generate_for:
+          include:
+            - lib/models/*.dart
+            - lib/models/**/*.dart
+      mobx_codegen:mobx_generator:
+        generate_for:
+          - lib/views/**/*_view_model.dart
