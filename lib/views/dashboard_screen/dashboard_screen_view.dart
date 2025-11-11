@@ -1,3 +1,5 @@
+import 'package:algolab/algorithms/sorting/bubble_sort.dart';
+import 'package:algolab/app_router.gr.dart';
 import 'package:algolab/views/base/screen_view_base.dart';
 import 'package:algolab/views/dashboard_screen/dashboard_screen_controller.dart';
 import 'package:algolab/views/dashboard_screen/dashboard_screen_view_model.dart';
@@ -13,7 +15,9 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
 
   @override
   Widget get body {
-    return Scaffold(body: Center(child: Text("Hello from DashboardScreen!")));
+    return Scaffold(body: Center(child: FilledButton(onPressed: () {
+      router.push(SortingPracticeRoute(numberCount: 10, allowDuplicateNumbers: false, algorithm: BubbleSort()));
+    }, child: Text("Start demo"))));
   }
 
 }
