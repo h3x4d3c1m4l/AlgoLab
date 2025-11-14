@@ -59,4 +59,9 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
     }
   }
 
+  bool showStepNumber(int index) {
+    var currentR = _stepViewModels[index];
+    return index == 0 || currentR.stepIndex != _stepViewModels[index - 1].stepIndex;
+  }
+
 }
