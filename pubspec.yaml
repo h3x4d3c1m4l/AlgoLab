@@ -1,12 +1,12 @@
 name: algolab
-description: "An open source application to help learning algorithms and other."
+description: "An open source application to help learning algorithms and other computer stuff."
 
 publish_to: 'none'
 
 version: 0.0.1+1
 
 environment:
-  sdk: ^3.9.2
+  sdk: ^3.10.0
 
 dependencies:
   flutter: { sdk: flutter }
