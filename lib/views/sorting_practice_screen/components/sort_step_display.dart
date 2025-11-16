@@ -16,19 +16,19 @@ class SortStepDisplay extends StatelessWidget {
       segments: viewModel.currentValues.mapIndexed((index, element) {
         return ButtonSegment(value: index, label: Text('$element'));
       }).toList(),
-      selected: viewModel.selectedIndices.unlockView,
+      selected: viewModel.highlightedIndices.unlockView,
       multiSelectionEnabled: true,
       emptySelectionAllowed: true,
       style: SegmentedButton.styleFrom(
-        selectedBackgroundColor: viewModel.isCorrect == true
+        selectedBackgroundColor: viewModel.type == SortStepType.correctSwap || viewModel.type == SortStepType.compare
             ? Colors.lightGreenAccent
-            : viewModel.isCorrect == false
+            : viewModel.type == SortStepType.incorrectSwap
             ? Colors.red
             : Colors.yellow,
       ),
       showSelectedIcon: false,
       onSelectionChanged: (indicesSet) {
-        if (viewModel.isCorrect == null) onSelectedIndicesChanged(indicesSet.lock);
+        if (viewModel.type == null) onSelectedIndicesChanged(indicesSet.lock);
       },
     );
   }

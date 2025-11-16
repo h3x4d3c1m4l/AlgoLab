@@ -10,58 +10,104 @@ part 'sorting_practice_screen_view_model.g.dart';
 
 class SortingPracticeScreenViewModel = SortingPracticeScreenViewModelBase with _$SortingPracticeScreenViewModel;
 
-// typedef // Sander: Hier komt een soort model voor de sort step display
-
 abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase with Store {
 
-  late final IList<int> startValues;
+  final SortAlgorithm algorithm;
 
+  late final IList<int> startValues;
   late final IList<SortStep> steps;
+  late final int totalSwapCount;
+
+  IList<SortStepViewModel> _nextCompareSteps = const IList.empty();
 
   @readonly
   int _currentStep = 0;
 
   @readonly
-  late IList<SortStepViewModel> _stepViewModels;
+  IList<SortStepViewModel> _stepViewModels = const IList.empty();
 
   SortingPracticeScreenViewModelBase({
     required super.contextAccessor,
+    required this.algorithm,
     required int numberCount,
     required bool allowDuplicateNumbers,
-    required SortAlgorithm algorithm,
   }) {
     startValues = generateRandomNumbers(length: numberCount, allowDuplicates: allowDuplicateNumbers);
     steps = algorithm.generateSteps(startValues);
-    _stepViewModels = [SortStepViewModel(stepIndex: 1, currentValues: startValues, selectedIndices: const ISetConst({}))].lock;
+    totalSwapCount = steps.count((s) => s.swap);
+    initializeStepViewModels();
+  }
+
+  String get bottomText {
+    return 'Select the two numbers that are to be swapped next.';
+  }
+
+  void initializeStepViewModels() {
+    while (!steps[_currentStep].swap) {
+      _nextCompareSteps = _nextCompareSteps.add(
+        SortStepViewModel(
+          type: SortStepType.compare,
+          currentValues: _currentStep == 0 ? startValues : steps[_currentStep - 1].currentArray,
+          highlightedIndices: ISet({steps[_currentStep].indexA, steps[_currentStep].indexB}),
+        ),
+      );
+      _currentStep++;
+    }
+
+    _stepViewModels = _stepViewModels.add(
+      SortStepViewModel(
+        swapIndex: 1,
+        currentValues: _currentStep == 0 ? startValues : steps[_currentStep - 1].currentArray,
+        highlightedIndices: const ISetConst({}),
+      ),
+    );
   }
 
   void updateSelectedIndices(ISet<int> indices) {
     _stepViewModels = _stepViewModels.replace(
       _stepViewModels.length - 1,
-      _stepViewModels[_stepViewModels.length - 1].copyWith(selectedIndices: indices),
+      _stepViewModels[_stepViewModels.length - 1].copyWith(highlightedIndices: indices),
     );
   }
 
   void verifyAndHandleResultOfLastStep() {
     SortStep currentStep = steps[_currentStep];
     SortStepViewModel stepViewModel = _stepViewModels.last;
-    if (stepViewModel.selectedIndices.containsAll([currentStep.indexA, currentStep.indexB])) {
-      _stepViewModels = _stepViewModels
-          .replace(_stepViewModels.length - 1, _stepViewModels[_stepViewModels.length - 1].copyWith(isCorrect: true))
-          .add(
-            SortStepViewModel(stepIndex: _currentStep + 2, currentValues: steps[_currentStep].currentArray, selectedIndices: const ISetConst({})),
-          );
+    if (stepViewModel.highlightedIndices.containsAll([currentStep.indexA, currentStep.indexB])) {
+      // User input was correct.
+      _stepViewModels = _stepViewModels.removeLast().addAll(_nextCompareSteps).add(
+        stepViewModel.copyWith(type: SortStepType.correctSwap),
+      );
       _currentStep++;
-    } else {
-      _stepViewModels = _stepViewModels
-          .replace(_stepViewModels.length - 1, _stepViewModels[_stepViewModels.length - 1].copyWith(isCorrect: false))
-          .add(_stepViewModels[_stepViewModels.length - 1].copyWith(selectedIndices: const ISetConst({}), isCorrect: null));
-    }
-  }
 
-  bool showStepNumber(int index) {
-    var currentR = _stepViewModels[index];
-    return index == 0 || currentR.stepIndex != _stepViewModels[index - 1].stepIndex;
+      _nextCompareSteps = const IList.empty();
+      while (_currentStep < steps.length && !steps[_currentStep].swap) {
+        _nextCompareSteps = _nextCompareSteps.add(
+          SortStepViewModel(
+            type: SortStepType.compare,
+            currentValues: steps[_currentStep - 1].currentArray,
+            highlightedIndices: ISet({steps[_currentStep].indexA, steps[_currentStep].indexB}),
+          ),
+        );
+        _currentStep++;
+      }
+
+      // Add next step.
+      if (_currentStep < steps.length) {
+        _stepViewModels = _stepViewModels.add(
+          SortStepViewModel(
+            swapIndex: stepViewModel.swapIndex! + 1,
+            currentValues: steps[_currentStep - 1].currentArray,
+            highlightedIndices: const ISetConst({}),
+          ),
+        );
+      }
+    } else {
+      // User input was incorrect.
+      _stepViewModels = _stepViewModels
+          .replace(_stepViewModels.length - 1, _stepViewModels[_stepViewModels.length - 1].copyWith(type: SortStepType.incorrectSwap))
+          .add(_stepViewModels[_stepViewModels.length - 1].copyWith(highlightedIndices: const ISetConst({}), type: null));
+    }
   }
 
 }

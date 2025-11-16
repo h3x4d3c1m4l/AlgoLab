@@ -22,6 +22,14 @@ class SortingPracticeScreenController extends ScreenControllerBase<SortingPracti
     WidgetsBinding.instance.addPostFrameCallback((_) {
       tableScrollController.animateTo(tableScrollController.position.maxScrollExtent, duration: Durations.medium1, curve: Curves.easeInOut);
     });
+
+    if (viewModel.currentStep == viewModel.steps.length) {
+      showDialog(context: contextAccessor.buildContext, builder: (_) {
+        return AlertDialog(
+          title: const Text('Nice!'),
+        );
+      });
+    }
   }
 
   @override

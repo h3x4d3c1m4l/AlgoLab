@@ -18,7 +18,7 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
   Widget get body {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Practicing: Sorting"),
+        title: Text("Practicing: ${viewModel.algorithm.name}"),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 32),
@@ -32,7 +32,7 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
             children: viewModel.stepViewModels.mapIndexed((index, step) {
               return TableRow(
                 children: [
-                  Visibility(visible: viewModel.showStepNumber(index), child: Text('Step ${step.stepIndex}')),
+                  Text(step.swapIndex != null ? 'Swap ${step.swapIndex}' : 'Vergelijking'),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     child: SingleChildScrollView(
@@ -47,6 +47,17 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
               );
             }).toList(),
           ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 60,
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(viewModel.bottomText),
+          backgroundColor: Colors.lightGreenAccent[100],
+          actions: [
+
+          ],
         ),
       ),
     );

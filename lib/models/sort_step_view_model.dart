@@ -7,10 +7,12 @@ part 'sort_step_view_model.freezed.dart';
 abstract class SortStepViewModel with _$SortStepViewModel {
 
   const factory SortStepViewModel({
-    required int stepIndex,
+    SortStepType? type,
+    int? swapIndex,
     required IList<int> currentValues,
-    required ISet<int> selectedIndices,
-    bool? isCorrect,
+    required ISet<int> highlightedIndices,
   }) = _SortStepViewModel;
 
 }
+
+enum SortStepType { compare, incorrectSwap, correctSwap }
