@@ -30,7 +30,7 @@ dependencies:
   fast_immutable_collections: 11.1.0
 
   # Misc
-  meta: any
+  meta: 1.17.0
   collection: any
 
 dev_dependencies:
