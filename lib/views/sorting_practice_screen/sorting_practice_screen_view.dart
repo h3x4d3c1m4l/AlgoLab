@@ -1,4 +1,5 @@
 import 'package:algolab/views/base/screen_view_base.dart';
+import 'package:algolab/views/components/algo_lab_scaffold.dart';
 import 'package:algolab/views/sorting_practice_screen/components/sort_step_display.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_controller.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_view_model.dart';
@@ -16,10 +17,8 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
 
   @override
   Widget get body {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Practicing: ${viewModel.algorithm.name}"),
-      ),
+    return AlgoLabScaffold(
+      appBarTitle: "Practicing: ${viewModel.algorithm.name}",
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 32),
         controller: controller.tableScrollController,
@@ -49,17 +48,7 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 60,
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(viewModel.bottomText),
-          backgroundColor: Colors.lightGreenAccent[100],
-          actions: [
-
-          ],
-        ),
-      ),
+      bottomBarMiddle: Text(viewModel.bottomText),
     );
   }
 
