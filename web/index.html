@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
@@ -29,10 +16,56 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>algolab</title>
+  <title>AlgoLab</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Loading spinner -->
+  <style>
+    html, body, .loader-wrapper {
+      height: 100%;
+    }
+
+    .loader-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .loader {
+      width: 40px;
+      aspect-ratio: .577;
+      clip-path: polygon(0 0,100% 100%,0 100%,100% 0);
+      position: relative;
+      animation: l19 2s infinite linear; 
+      overflow: hidden;
+    }
+    .loader:before{
+      content: "";
+      position: absolute;
+      inset: -150% -150%;
+      background: repeating-conic-gradient(from 30deg,#FFABAB 0 60deg,#ABE4FF 0 120deg,#FF7373 0 180deg);
+      animation: inherit;
+      animation-direction: reverse; 
+    }
+    @keyframes l19 {
+      100% {transform: rotate(360deg)}
+    }
+  </style>
 </head>
 <body>
+  <!-- First time loading -->
+  <div class="loader-wrapper">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Ensure first time loading progress is gone after app loads -->
+  <script>
+    window.addEventListener("flutter-first-frame", function () {
+      var element = document.getElementsByClassName("loader-wrapper");
+      element[0].parentNode.removeChild(element[0]);
+    });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
