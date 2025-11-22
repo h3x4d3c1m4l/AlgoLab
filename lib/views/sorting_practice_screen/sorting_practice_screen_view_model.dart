@@ -26,6 +26,9 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
   @readonly
   IList<SortStepViewModel> _stepViewModels = const IList.empty();
 
+  @computed
+  String get swapCounter => '${_stepViewModels.last.swapIndex} / $totalSwapCount';
+
   SortingPracticeScreenViewModelBase({
     required super.contextAccessor,
     required this.algorithm,
@@ -36,10 +39,6 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
     steps = algorithm.generateSteps(startValues);
     totalSwapCount = steps.count((s) => s.swap);
     initializeStepViewModels();
-  }
-
-  String get bottomText {
-    return 'Select the two numbers that are to be swapped next.';
   }
 
   void initializeStepViewModels() {

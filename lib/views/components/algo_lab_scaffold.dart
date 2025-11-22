@@ -3,25 +3,22 @@ import 'package:flutter/material.dart';
 class AlgoLabScaffold extends StatelessWidget {
 
   final Widget? appBarLeading;
-  final String? appBarTitle;
+  final Widget? appBarMiddle;
   final Widget? appBarTrailing;
   final Widget body;
   final Widget? bottomBarLeading;
   final Widget? bottomBarMiddle;
   final Widget? bottomBarTrailing;
 
-  const AlgoLabScaffold({super.key, this.appBarLeading, this.appBarTitle, this.appBarTrailing, required this.body, this.bottomBarLeading, this.bottomBarMiddle, this.bottomBarTrailing});
+  const AlgoLabScaffold({super.key, this.appBarLeading, this.appBarMiddle, this.appBarTrailing, required this.body, this.bottomBarLeading, this.bottomBarMiddle, this.bottomBarTrailing});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(
-        leading: appBarLeading,
-        middle: appBarTitle != null ? Text(appBarTitle!, style: Theme.of(context).textTheme.titleLarge) : null,
-        trailing: appBarTrailing,
-      ),
-      body: Align(
+      appBar: _AppBar(leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing),
+      body: Container(
         alignment: Alignment.topCenter,
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(width: 1200, child: body),
       ),
       bottomNavigationBar: _AppBar(leading: bottomBarLeading, middle: bottomBarMiddle, trailing: bottomBarTrailing),
@@ -43,12 +40,13 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       height: 64,
       alignment: Alignment.center,
-      child: SizedBox(
+      child: Container(
         width: 1200,
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: NavigationToolbar(
-          leading: leading,
+          leading: IntrinsicWidth(child: Align(alignment: Alignment.centerLeft, child: leading)),
           middle: middle,
-          trailing: trailing,
+          trailing: IntrinsicWidth(child: Align(alignment: Alignment.centerRight, child: trailing)),
         ),
       ),
     );

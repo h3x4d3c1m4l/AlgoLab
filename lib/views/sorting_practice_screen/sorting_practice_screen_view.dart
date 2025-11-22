@@ -1,9 +1,9 @@
+import 'package:algolab/models/sort_step_view_model.dart';
 import 'package:algolab/views/base/screen_view_base.dart';
 import 'package:algolab/views/components/algo_lab_scaffold.dart';
 import 'package:algolab/views/sorting_practice_screen/components/sort_step_display.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_controller.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_view_model.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -18,37 +18,33 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
   @override
   Widget get body {
     return AlgoLabScaffold(
-      appBarTitle: "Practicing: ${viewModel.algorithm.name}",
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 32),
-        controller: controller.tableScrollController,
-        child: Observer(
-          builder: (_) => Table(
-            columnWidths: {
-              0: IntrinsicColumnWidth(),
-            },
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            children: viewModel.stepViewModels.mapIndexed((index, step) {
-              return TableRow(
-                children: [
-                  Text(step.swapIndex != null ? 'Swap ${step.swapIndex}' : 'Vergelijking'),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SortStepDisplay(
-                        viewModel: step,
-                        onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }).toList(),
-          ),
-        ),
+      appBarMiddle: Text(
+        "Select the two numbers that are to be swapped next.",
+        style: Theme.of(context).textTheme.titleMedium,
       ),
-      bottomBarMiddle: Text(viewModel.bottomText),
+      body: Observer(
+        builder: (context) {
+          return ListView.builder(
+            controller: controller.tableScrollController,
+            itemCount: viewModel.stepViewModels.length,
+            itemBuilder: (_, index) {
+              SortStepViewModel step = viewModel.stepViewModels[index];
+              return SortStepDisplay(
+                leading: step.swapIndex != null ? 'Swap ${step.swapIndex}' : 'Comparison',
+                viewModel: step,
+                onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
+              );
+            },
+          );
+        }
+      ),
+      bottomBarLeading: Text(
+        'Practicing: ${viewModel.algorithm.name}',
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
+      bottomBarTrailing: Observer(
+        builder: (context) => Text(viewModel.swapCounter, style: Theme.of(context).textTheme.titleLarge),
+      ),
     );
   }
 

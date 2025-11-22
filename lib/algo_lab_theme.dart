@@ -10,6 +10,7 @@ class AlgoLabTheme {
     textTheme: GoogleFonts.enriquetaTextTheme().copyWith(
       headlineSmall: GoogleFonts.sueEllenFrancisco(fontSize: 48),
       labelLarge: GoogleFonts.sueEllenFrancisco(fontSize: 28),
+      titleLarge: GoogleFonts.sueEllenFrancisco(fontSize: 28),
     ),
     dialogTheme: DialogThemeData(
       shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(64))
