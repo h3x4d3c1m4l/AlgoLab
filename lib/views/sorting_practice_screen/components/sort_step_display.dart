@@ -18,7 +18,18 @@ class SortStepDisplay extends StatelessWidget {
       child: Row(
         spacing: 16,
         children: [
-          SizedBox(width: 128, child: viewModel.type != SortStepType.incorrectSwap ? Text(leading, textAlign: TextAlign.end) : null),
+          SizedBox(
+            width: 128,
+            child: viewModel.type != SortStepType.incorrectSwap
+                ? Text(
+                    leading,
+                    textAlign: TextAlign.end,
+                    style: viewModel.type == SortStepType.endResult
+                        ? TextStyle(fontWeight: FontWeight.bold)
+                        : const TextStyle(),
+                  )
+                : null,
+          ),
           Expanded(
             child: Center(
               child: SingleChildScrollView(

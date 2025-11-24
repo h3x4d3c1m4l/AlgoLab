@@ -5,6 +5,7 @@ Future<T?> showAlgoLabDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool barrierDismissible = true,
+  bool blurBackground = true,
 }) {
   return showGeneralDialog(
     context: context,
@@ -16,17 +17,18 @@ Future<T?> showAlgoLabDialog<T>({
       return Stack(
         children: [
           // Animated blurred backdrop.
-          IgnorePointer( // For some reason this fixes the barrier dismission...
-            child: AnimatedBuilder(
-              animation: animation,
-              builder: (context, child) {
-                return BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5 * animation.value, sigmaY: 5 * animation.value),
-                  child: Container(color: Colors.black.withValues(alpha: 0.3 * animation.value)),
-                );
-              },
+          if (blurBackground)
+            IgnorePointer( // For some reason this fixes the barrier dismission...
+              child: AnimatedBuilder(
+                animation: animation,
+                builder: (context, child) {
+                  return BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5 * animation.value, sigmaY: 5 * animation.value),
+                    child: Container(color: Colors.black.withValues(alpha: 0.3 * animation.value)),
+                  );
+                },
+              ),
             ),
-          ),
           // Dialog content with fade and scale.
           Center(
             child: FadeTransition(

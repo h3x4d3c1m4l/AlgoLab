@@ -15,4 +15,4 @@ abstract class SortStepViewModel with _$SortStepViewModel {
 
 }
 
-enum SortStepType { compare, incorrectSwap, correctSwap }
+enum SortStepType { compare, incorrectSwap, correctSwap, endResult }

@@ -25,6 +25,9 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
         spacing: 16,
         children: [
           FilledButton(onPressed: () {
+            router.push(SortingPracticeRoute(numberCount: 5, allowDuplicateNumbers: false, algorithm: BubbleSort()));
+          }, child: Text("Start Bubble Sort (n = 5, no dups)")),
+          FilledButton(onPressed: () {
             router.push(SortingPracticeRoute(numberCount: 10, allowDuplicateNumbers: false, algorithm: BubbleSort()));
           }, child: Text("Start Bubble Sort (n = 10, no dups)")),
           FilledButton(onPressed: () {

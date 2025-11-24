@@ -38,7 +38,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 64,
+      height: 92,
       alignment: Alignment.center,
       child: Container(
         width: 1200,

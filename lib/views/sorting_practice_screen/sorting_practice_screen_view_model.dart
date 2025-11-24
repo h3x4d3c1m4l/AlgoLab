@@ -27,7 +27,7 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
   IList<SortStepViewModel> _stepViewModels = const IList.empty();
 
   @computed
-  String get swapCounter => '${_stepViewModels.last.swapIndex} / $totalSwapCount';
+  String get swapCounter => 'Step ${_stepViewModels.last.swapIndex ?? totalSwapCount} / $totalSwapCount';
 
   SortingPracticeScreenViewModelBase({
     required super.contextAccessor,
@@ -91,12 +91,21 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
         _currentStep++;
       }
 
-      // Add next step.
       if (_currentStep < steps.length) {
+        // Add next step.
         _stepViewModels = _stepViewModels.add(
           SortStepViewModel(
             swapIndex: stepViewModel.swapIndex! + 1,
             currentValues: steps[_currentStep - 1].currentArray,
+            highlightedIndices: const ISetConst({}),
+          ),
+        );
+      } else if (_currentStep == steps.length) {
+        // Add result.
+        _stepViewModels = _stepViewModels.add(
+          SortStepViewModel(
+            type: SortStepType.endResult,
+            currentValues: startValues.sort(),
             highlightedIndices: const ISetConst({}),
           ),
         );

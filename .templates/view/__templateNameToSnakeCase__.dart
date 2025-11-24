@@ -5,6 +5,7 @@ import 'package:algolab/views/__templateNameToSnakeCase__/__templateNameToSnakeC
 import 'package:algolab/views/__templateNameToSnakeCase__/__templateNameToSnakeCase___view_model.dart';
 import 'package:auto_route/annotations.dart';
 
+@RoutePage()
 class __templateNameToPascalCase__ extends ScreenBase<__templateNameToPascalCase__ViewModel, __templateNameToPascalCase__Controller, __templateNameToPascalCase__View> {
 
   const __templateNameToPascalCase__({super.key});
