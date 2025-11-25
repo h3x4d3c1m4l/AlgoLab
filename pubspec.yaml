@@ -20,6 +20,7 @@ dependencies:
   google_fonts: 6.3.2
   auto_route: 10.2.2
   animated_reorderable_list: 1.3.0
+  flexible_wrap: 1.0.7
 
   # MVC
   mobx: 2.5.0

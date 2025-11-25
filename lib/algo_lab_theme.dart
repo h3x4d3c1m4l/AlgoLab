@@ -14,6 +14,10 @@ class AlgoLabTheme {
       bodyLarge: GoogleFonts.enriqueta(fontSize: 18),
       bodyMedium: GoogleFonts.enriqueta(fontSize: 16),
     ),
+    cardTheme: CardThemeData(
+      margin: EdgeInsets.zero,
+      shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(32)),
+    ),
     dialogTheme: DialogThemeData(
       iconColor: primaryColor,
       shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(64))

@@ -1,12 +1,15 @@
+import 'package:algolab/algorithms/algorithm.dart';
 import 'package:algolab/algorithms/sorting/bubble_sort.dart';
 import 'package:algolab/algorithms/sorting/selection_sort.dart';
+import 'package:algolab/algorithms/sorting/sort_algorithm.dart';
 import 'package:algolab/app_router.gr.dart';
-import 'package:algolab/views/base/dialog_helper.dart';
 import 'package:algolab/views/base/screen_view_base.dart';
 import 'package:algolab/views/components/algo_lab_scaffold.dart';
+import 'package:algolab/views/dashboard_screen/components/algorithm_card.dart';
 import 'package:algolab/views/dashboard_screen/dashboard_screen_controller.dart';
 import 'package:algolab/views/dashboard_screen/dashboard_screen_view_model.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flexible_wrap/flexible_wrap.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, DashboardScreenController> {
@@ -19,34 +22,39 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
 
   @override
   Widget get body {
-    return AlgoLabScaffold(body: SizedBox.expand(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 16,
-        children: [
-          FilledButton(onPressed: () {
-            router.push(SortingPracticeRoute(numberCount: 5, allowDuplicateNumbers: false, algorithm: BubbleSort()));
-          }, child: Text("Start Bubble Sort (n = 5, no dups)")),
-          FilledButton(onPressed: () {
-            router.push(SortingPracticeRoute(numberCount: 10, allowDuplicateNumbers: false, algorithm: BubbleSort()));
-          }, child: Text("Start Bubble Sort (n = 10, no dups)")),
-          FilledButton(onPressed: () {
-            router.push(SortingPracticeRoute(numberCount: 10, allowDuplicateNumbers: false, algorithm: SelectionSort()));
-          }, child: Text("Start Selection Sort (n = 10, no dups)")),
-          FilledButton(onPressed: () {
-            showAlgoLabDialog(context: context, builder: (_) {
-              return AlertDialog(
-                title: Text("This is title!"),
-                content: Text("Testtest\n\nTest blablabalba"),
-                actions: [
-                  FilledButton(onPressed: () => context.pop(), child: Text('Ok!')),
-                ],
-              );
-            });
-          }, child: Text("Dialog test")),
-        ],
+    return AlgoLabScaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Welcome!', style: theme.textTheme.headlineSmall),
+            const SizedBox(height: 32),
+            Row(
+              spacing: 16,
+              children: [
+                Icon(Icons.sort),
+                Text('Sorting algorithms', style: theme.textTheme.headlineMedium),
+              ],
+            ),
+            const SizedBox(height: 16),
+            FlexibleWrap(
+              runSpacing: 16,
+              children: [
+                AlgorithmCard(algorithm: const BubbleSort(), onTap: () => onCardTapped(const BubbleSort())),
+                AlgorithmCard(algorithm: const SelectionSort(), onTap: () => onCardTapped(const SelectionSort())),
+              ],
+            ),
+          ],
+        ),
       ),
-    ));
+    );
+  }
+
+  void onCardTapped(Algorithm algorithm) {
+    switch (algorithm) {
+      case SortAlgorithm _:
+        context.pushRoute(SortingPracticeRoute(numberCount: 10, allowDuplicateNumbers: false, algorithm: algorithm));
+    }
   }
 
 }
