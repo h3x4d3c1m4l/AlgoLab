@@ -20,7 +20,10 @@ class AlgoLabTheme {
     ),
     dialogTheme: DialogThemeData(
       iconColor: primaryColor,
-      shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(64))
+      shape: ContinuousRectangleBorder(
+        side: const BorderSide(color: Colors.black54),
+        borderRadius: BorderRadiusGeometry.circular(64),
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(style: ElevatedButton.styleFrom(
       padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),

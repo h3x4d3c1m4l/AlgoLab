@@ -21,7 +21,7 @@ dependencies:
   auto_route: 10.2.3
   animated_reorderable_list: 1.3.0
   flexible_wrap: 1.0.7
-  rough_flutter: 0.1.2
+  sketchy_design_lang: 0.1.2
   flutter_sketchy_text: 2.0.3
 
   # MVC

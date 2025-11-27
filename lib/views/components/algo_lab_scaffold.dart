@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sketchy_design_lang/sketchy_design_lang.dart';
 
 class AlgoLabScaffold extends StatelessWidget {
 
@@ -15,44 +16,59 @@ class AlgoLabScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing),
+      appBar: _AppBar(location: _AppBarLocation.top, leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing),
       body: Container(
         alignment: Alignment.topCenter,
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: SizedBox(width: 1200, child: body),
       ),
-      bottomNavigationBar: _AppBar(leading: bottomBarLeading, middle: bottomBarMiddle, trailing: bottomBarTrailing),
+      bottomNavigationBar: _AppBar(location: _AppBarLocation.bottom, leading: bottomBarLeading, middle: bottomBarMiddle, trailing: bottomBarTrailing),
     );
   }
 
 }
 
+enum _AppBarLocation { top, bottom }
+
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
+  final _AppBarLocation location;
   final Widget? leading;
   final Widget? middle;
   final Widget? trailing;
 
-  const _AppBar({this.leading, this.middle, this.trailing});
+  const _AppBar({required this.location, this.leading, this.middle, this.trailing});
+
+  double get _height => location == _AppBarLocation.top ? 64 : 86;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 92,
-      alignment: Alignment.center,
-      child: Container(
-        width: 1200,
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: NavigationToolbar(
-          leading: IntrinsicWidth(child: Align(alignment: Alignment.centerLeft, child: leading)),
-          middle: middle,
-          trailing: IntrinsicWidth(child: Align(alignment: Alignment.centerRight, child: trailing)),
+    if (leading == null && middle == null && trailing == null) return SizedBox(height: preferredSize.height);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (location == _AppBarLocation.top) const SizedBox(height: 6),
+        if (location == _AppBarLocation.bottom) SketchyDivider(),
+        Container(
+          height: _height - 16 - 6,
+          alignment: Alignment.center,
+          child: Container(
+            width: 1200,
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: NavigationToolbar(
+              leading: IntrinsicWidth(child: Align(alignment: Alignment.centerLeft, child: leading)),
+              middle: middle,
+              trailing: IntrinsicWidth(child: Align(alignment: Alignment.centerRight, child: trailing)),
+            ),
+          ),
         ),
-      ),
+        if (location == _AppBarLocation.top) SketchyDivider(),
+        if (location == _AppBarLocation.bottom) const SizedBox(height: 6),
+      ],
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(64);
+  Size get preferredSize => Size.fromHeight(_height);
 
 }

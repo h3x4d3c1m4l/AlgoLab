@@ -28,6 +28,7 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
         builder: (context) {
           return ListView.builder(
             controller: controller.tableScrollController,
+            padding: EdgeInsets.symmetric(vertical: 16),
             itemCount: viewModel.stepViewModels.length,
             itemBuilder: (_, index) {
               SortStepViewModel step = viewModel.stepViewModels[index];
