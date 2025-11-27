@@ -35,12 +35,12 @@ class AlgoLabTheme {
       shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(32)),
     )),
     textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(
-      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(32)),
     )),
     iconButtonTheme: IconButtonThemeData(
       style: IconButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(32)),
       ),
     ),

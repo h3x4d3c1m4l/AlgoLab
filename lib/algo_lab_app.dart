@@ -19,7 +19,7 @@ class _AlgoLabAppState extends State<AlgoLabApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'AlgoLAB',
+      title: 'AlgoLab',
       theme: AlgoLabTheme.theme,
       routerConfig: _appRouter.config(),
       localizationsDelegates: const [

@@ -13,14 +13,16 @@ dependencies:
   flutter_localizations: { sdk: flutter }
 
   # UI
-  flutter_svg: 2.2.2
+  flutter_svg: 2.2.3
   animated_text_kit: 4.3.0
   flutter_confetti: 0.5.1
   lucide_icons_flutter: 3.1.6
   google_fonts: 6.3.2
-  auto_route: 10.2.2
+  auto_route: 10.2.3
   animated_reorderable_list: 1.3.0
   flexible_wrap: 1.0.7
+  rough_flutter: 0.1.2
+  flutter_sketchy_text: 2.0.3
 
   # MVC
   mobx: 2.5.0
@@ -34,6 +36,9 @@ dependencies:
   # Misc
   meta: any
   collection: any
+  package_info_plus: 9.0.0
+  url_launcher: 6.3.2
+  get_it: 9.1.1
 
 dev_dependencies:
   flutter_test: { sdk: flutter }
