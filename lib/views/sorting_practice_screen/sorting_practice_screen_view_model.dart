@@ -4,6 +4,7 @@ import 'package:algolab/models/sort_step.dart';
 import 'package:algolab/models/sort_step_view_model.dart';
 import 'package:algolab/views/base/screen_view_model_base.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 
 part 'sorting_practice_screen_view_model.g.dart';
@@ -45,6 +46,7 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
     while (!steps[_currentStep].swap) {
       _nextCompareSteps = _nextCompareSteps.add(
         SortStepViewModel(
+          key: UniqueKey(),
           type: SortStepType.compare,
           currentValues: _currentStep == 0 ? startValues : steps[_currentStep - 1].currentArray,
           highlightedIndices: ISet({steps[_currentStep].indexA, steps[_currentStep].indexB}),
@@ -55,6 +57,7 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
 
     _stepViewModels = _stepViewModels.add(
       SortStepViewModel(
+        key: UniqueKey(),
         swapIndex: 1,
         currentValues: _currentStep == 0 ? startValues : steps[_currentStep - 1].currentArray,
         highlightedIndices: const ISetConst({}),
@@ -83,6 +86,7 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
       while (_currentStep < steps.length && !steps[_currentStep].swap) {
         _nextCompareSteps = _nextCompareSteps.add(
           SortStepViewModel(
+            key: UniqueKey(),
             type: SortStepType.compare,
             currentValues: steps[_currentStep - 1].currentArray,
             highlightedIndices: ISet({steps[_currentStep].indexA, steps[_currentStep].indexB}),
@@ -95,6 +99,7 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
         // Add next step.
         _stepViewModels = _stepViewModels.add(
           SortStepViewModel(
+            key: UniqueKey(),
             swapIndex: stepViewModel.swapIndex! + 1,
             currentValues: steps[_currentStep - 1].currentArray,
             highlightedIndices: const ISetConst({}),
@@ -104,6 +109,7 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
         // Add result.
         _stepViewModels = _stepViewModels.add(
           SortStepViewModel(
+            key: UniqueKey(),
             type: SortStepType.endResult,
             currentValues: startValues.sort(),
             highlightedIndices: const ISetConst({}),
@@ -114,7 +120,7 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
       // User input was incorrect.
       _stepViewModels = _stepViewModels
           .replace(_stepViewModels.length - 1, _stepViewModels[_stepViewModels.length - 1].copyWith(type: SortStepType.incorrectSwap))
-          .add(_stepViewModels[_stepViewModels.length - 1].copyWith(highlightedIndices: const ISetConst({}), type: null));
+          .add(_stepViewModels[_stepViewModels.length - 1].copyWith(key: UniqueKey(), highlightedIndices: const ISetConst({}), type: null));
     }
   }
 

@@ -2,7 +2,8 @@ import 'package:algolab/models/sort_step_view_model.dart';
 import 'package:algolab/views/base/dialog_helper.dart';
 import 'package:algolab/views/base/screen_view_base.dart';
 import 'package:algolab/views/components/algo_lab_scaffold.dart';
-import 'package:algolab/views/components/cancel_exercise_dialog.dart';
+import 'package:algolab/views/components/containers/animated_appearance.dart';
+import 'package:algolab/views/components/dialogs/cancel_exercise_dialog.dart';
 import 'package:algolab/views/sorting_practice_screen/components/sort_step_display.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_controller.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_view_model.dart';
@@ -26,18 +27,23 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
       ),
       body: Observer(
         builder: (context) {
-          return ListView.builder(
-            controller: controller.tableScrollController,
-            padding: EdgeInsets.symmetric(vertical: 16),
-            itemCount: viewModel.stepViewModels.length,
-            itemBuilder: (_, index) {
-              SortStepViewModel step = viewModel.stepViewModels[index];
-              return SortStepDisplay(
-                leading: step.swapIndex != null ? 'Swap ${step.swapIndex}' : step.type == SortStepType.endResult ? 'End result' : 'Comparison',
-                viewModel: step,
-                onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
-              );
-            },
+          return Align(
+            alignment: AlignmentGeometry.bottomCenter,
+            child: SingleChildScrollView(
+              reverse: true,
+              controller: controller.tableScrollController,
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                children: viewModel.stepViewModels.map((step) => AnimatedAppearance(
+                  key: step.key,
+                  child: SortStepDisplay(
+                    leading: step.swapIndex != null ? 'Swap ${step.swapIndex}' : step.type == SortStepType.endResult ? 'End result' : 'Comparison',
+                    viewModel: step,
+                    onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
+                  ),
+                )).toList(),
+              ),
+            ),
           );
         },
       ),

@@ -64,7 +64,7 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
             onPressed: onAboutButtonPressed,
             label: Text('About AlgoLab'),
             icon: Icon(Icons.info_outline),
-          )
+          ),
         ],
       ),
     );
