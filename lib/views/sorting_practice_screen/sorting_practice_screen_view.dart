@@ -39,7 +39,7 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
               );
             },
           );
-        }
+        },
       ),
       bottomBarLeading: Text(
         'Practicing: ${viewModel.algorithm.name}',

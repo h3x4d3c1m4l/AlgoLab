@@ -705,10 +705,10 @@ packages:
     dependency: "direct main"
     description:
       name: sketchy_design_lang
-      sha256: fd76394b929208883013278d843ecc31a859fbad9ecfb5db785a91e7add9a85b
+      sha256: "594790474f7749967b38208fafd0a5565e296d155de0be90532c2f3165561b6d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.2"
+    version: "0.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
