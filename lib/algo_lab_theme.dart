@@ -17,6 +17,7 @@ class AlgoLabTheme {
     cardTheme: CardThemeData(
       margin: EdgeInsets.zero,
       shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(32)),
+      elevation: 3, // Weird glitching happening on the dashboard when this is <= 2.0 ... ?
     ),
     dialogTheme: DialogThemeData(
       iconColor: primaryColor,
