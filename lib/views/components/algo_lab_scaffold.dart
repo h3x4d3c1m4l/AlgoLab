@@ -39,7 +39,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const _AppBar({required this.location, this.leading, this.middle, this.trailing});
 
-  double get _height => location == _AppBarLocation.top ? 64 : 86;
+  double get _height => location == _AppBarLocation.top ? 70 : 86;
 
   @override
   Widget build(BuildContext context) {

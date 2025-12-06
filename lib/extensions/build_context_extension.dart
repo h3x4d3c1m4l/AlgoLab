@@ -7,5 +7,6 @@ extension BuildContextExtension on BuildContext {
   NavigatorState get navigator => Navigator.of(this);
   NavigatorState get rootNavigator => Navigator.of(this, rootNavigator: true);
   AppLocalizations get localizations => AppLocalizations.of(this)!;
+  bool get isMobile => MediaQuery.widthOf(this) < 576;
 
 }
