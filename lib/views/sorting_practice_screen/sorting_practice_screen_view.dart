@@ -37,15 +37,26 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
               controller: controller.tableScrollController,
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Column(
-                children: viewModel.stepViewModels.mapIndexed((i, step) => AnimatedAppearance(
-                  key: step.key,
-                  child: SortStepDisplay(
-                    leading: step.swapIndex != null ? 'Swap ${step.swapIndex}' : step.type == SortStepType.endResult ? 'End result' : 'Comparison',
-                    viewModel: step,
-                    buttonsScrollController: controller.buttonsScrollControllers[i],
-                    onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
-                  ),
-                )).toList(),
+                children: viewModel.stepViewModels.mapIndexed((i, step) {
+                  String? leadingText;
+                  if (step.type == SortStepType.endResult) {
+                    leadingText = 'End result';
+                  } else if (step.swapIndex == null) {
+                    leadingText = 'Comparison';
+                  } else if (step.type == SortStepType.correctSwap || i == viewModel.stepViewModels.length - 1) {
+                    leadingText = 'Swap ${step.swapIndex}';
+                  }
+
+                  return AnimatedAppearance(
+                    key: step.key,
+                    child: SortStepDisplay(
+                      leading: leadingText,
+                      viewModel: step,
+                      buttonsScrollController: controller.buttonsScrollControllers[i],
+                      onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
+                    ),
+                  );
+                }).toList(),
               ),
             ),
           );

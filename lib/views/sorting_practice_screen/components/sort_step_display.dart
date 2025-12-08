@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class SortStepDisplay extends StatefulWidget {
 
-  final String leading;
+  final String? leading;
   final SortStepViewModel viewModel;
   final ScrollController buttonsScrollController;
   final ValueChanged<ISet<int>> onSelectedIndicesChanged;
@@ -31,8 +31,8 @@ class _SortStepDisplayState extends State<SortStepDisplay> {
         builder: (context, constraints) {
           onConstraintsChanged(context.isMobile);
 
-          Widget? startText = widget.viewModel.type != SortStepType.incorrectSwap ? Text(
-            widget.leading,
+          Widget? startText = widget.leading != null ? Text(
+            widget.leading!,
             textAlign: TextAlign.end,
             style: widget.viewModel.type == SortStepType.endResult
                 ? TextStyle(fontWeight: FontWeight.bold)
@@ -50,7 +50,7 @@ class _SortStepDisplayState extends State<SortStepDisplay> {
             return Column(
               spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [buttons, if (startText != null) startText],
+              children: [if (startText != null) startText, buttons],
             );
           } else {
             // Tablet, laptop, desktop, ...
