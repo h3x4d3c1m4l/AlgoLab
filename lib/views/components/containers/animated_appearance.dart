@@ -11,26 +11,48 @@ class AnimatedAppearance extends StatefulWidget {
 
 }
 
-class _AnimatedAppearanceState extends State<AnimatedAppearance> {
+class _AnimatedAppearanceState extends State<AnimatedAppearance> with TickerProviderStateMixin {
 
-  CrossFadeState _state = CrossFadeState.showFirst;
+  late final AnimationController _sizeAnimationController = AnimationController(
+    duration: const Duration(seconds: 2),
+    vsync: this,
+  )..forward()..addStatusListener((status) {
+    if (status.isCompleted) _fadeAnimationController.forward();
+  });
+  late final Animation<double> _sizeAnimation = CurvedAnimation(
+    parent: _sizeAnimationController,
+    curve: Curves.fastOutSlowIn,
+  );
+
+  late final AnimationController _fadeAnimationController = AnimationController(
+    duration: const Duration(seconds: 1),
+    vsync: this,
+  );
+  late final Animation<double> _fadeAnimation = CurvedAnimation(
+    parent: _fadeAnimationController,
+    curve: Curves.fastOutSlowIn,
+  );
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() => _state = CrossFadeState.showSecond);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedCrossFade(
-      firstChild: const SizedBox(height: 0),
-      secondChild: widget.child,
-      crossFadeState: _state,
-      duration: Duration(seconds: 1),
+    return SizeTransition(
+      sizeFactor: _sizeAnimation,
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: widget.child,
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _sizeAnimationController.dispose();
+    super.dispose();
   }
 
 }
