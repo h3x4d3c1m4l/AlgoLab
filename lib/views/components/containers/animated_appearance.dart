@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class AnimatedAppearance extends StatefulWidget {
 
+  final bool animateSize;
+  final bool isDim;
   final Widget child;
 
-  const AnimatedAppearance({super.key, required this.child});
+  const AnimatedAppearance({super.key, required this.animateSize, required this.isDim, required this.child});
 
   @override
   State<AnimatedAppearance> createState() => _AnimatedAppearanceState();
@@ -13,45 +15,64 @@ class AnimatedAppearance extends StatefulWidget {
 
 class _AnimatedAppearanceState extends State<AnimatedAppearance> with TickerProviderStateMixin {
 
-  late final AnimationController _sizeAnimationController = AnimationController(
-    duration: const Duration(seconds: 2),
-    vsync: this,
-  )..forward()..addStatusListener((status) {
-    if (status.isCompleted) _fadeAnimationController.forward();
-  });
-  late final Animation<double> _sizeAnimation = CurvedAnimation(
-    parent: _sizeAnimationController,
-    curve: Curves.fastOutSlowIn,
-  );
+  late final AnimationController? _sizeAnimationController;
+  late final Animation<double>? _sizeAnimation;
 
   late final AnimationController _fadeAnimationController = AnimationController(
-    duration: const Duration(seconds: 1),
+    duration: const Duration(milliseconds: 500),
     vsync: this,
   );
-  late final Animation<double> _fadeAnimation = CurvedAnimation(
-    parent: _fadeAnimationController,
-    curve: Curves.fastOutSlowIn,
-  );
+
+  static const dimOpacity = 0.4;
 
   @override
   void initState() {
+    if (widget.animateSize) {
+      _sizeAnimationController =
+          AnimationController(
+              duration: const Duration(seconds: 1),
+              vsync: this,
+            )
+            ..forward()
+            ..addStatusListener((status) {
+              if (status.isCompleted) _fadeAnimationController.animateTo(widget.isDim ? dimOpacity : 1.0);
+            });
+
+      _sizeAnimation = CurvedAnimation(parent: _sizeAnimationController!, curve: Curves.fastOutSlowIn);
+    } else {
+      _sizeAnimationController = null;
+      _sizeAnimation = null;
+      _fadeAnimationController.animateTo(widget.isDim ? dimOpacity : 1.0);
+    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizeTransition(
-      sizeFactor: _sizeAnimation,
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: widget.child,
-      ),
+    Widget child = FadeTransition(
+      opacity: _fadeAnimationController,
+      child: widget.child,
+    );
+
+    return MouseRegion(
+      onEnter: widget.isDim ? (event) {
+        _fadeAnimationController.animateTo(1.0);
+      } : null,
+      onExit: widget.isDim ? (event) {
+        _fadeAnimationController.animateTo(dimOpacity);
+      } : null,
+      child: widget.animateSize ? SizeTransition(
+        sizeFactor: _sizeAnimation!,
+        child: child,
+      ) : child,
     );
   }
 
   @override
   void dispose() {
-    _sizeAnimationController.dispose();
+    _sizeAnimationController?.dispose();
+    _fadeAnimationController.dispose();
     super.dispose();
   }
 

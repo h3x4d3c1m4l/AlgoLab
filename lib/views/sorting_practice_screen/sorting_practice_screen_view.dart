@@ -49,6 +49,8 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
 
                   return AnimatedAppearance(
                     key: step.key,
+                    isDim: step.type == SortStepType.compare,
+                    animateSize: i != 0,
                     child: SortStepDisplay(
                       leading: leadingText,
                       viewModel: step,
