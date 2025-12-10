@@ -12,7 +12,6 @@ class AlgorithmCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.only(right: 16),
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         onTap: onTap,

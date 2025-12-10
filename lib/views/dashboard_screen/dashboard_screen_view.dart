@@ -43,6 +43,7 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
             ),
             const SizedBox(height: 16),
             FlexibleWrap(
+              spacing: 8,
               runSpacing: 16,
               children: [
                 AlgorithmCard(algorithm: const BubbleSort(), onTap: () => onCardTapped(const BubbleSort())),
