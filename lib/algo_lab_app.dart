@@ -36,7 +36,7 @@ class _AlgoLabAppState extends State<AlgoLabApp> {
           typography: SketchyTypographyData.comicShanns(),
           strokeWidth: 1, roughness: 0.5,
         ),
-        child: child!,
+        child: TapRegionSurface(child: child!),
       ),
       supportedLocales: const [Locale('en'), Locale('nl')],
       locale: const Locale('en'),

@@ -25,6 +25,8 @@ class _AnimatedAppearanceState extends State<AnimatedAppearance> with TickerProv
 
   static const dimOpacity = 0.4;
 
+  bool _lastTapWasInside = false, _mousePointerInArea = false;
+
   @override
   void initState() {
     if (widget.animateSize) {
@@ -55,18 +57,46 @@ class _AnimatedAppearanceState extends State<AnimatedAppearance> with TickerProv
       child: widget.child,
     );
 
-    return MouseRegion(
-      onEnter: widget.isDim ? (event) {
-        _fadeAnimationController.animateTo(1.0);
-      } : null,
-      onExit: widget.isDim ? (event) {
-        _fadeAnimationController.animateTo(dimOpacity);
-      } : null,
-      child: widget.animateSize ? SizeTransition(
-        sizeFactor: _sizeAnimation!,
+    if (_sizeAnimation != null) {
+      child = SizeTransition(
+        sizeFactor: _sizeAnimation,
         child: child,
-      ) : child,
-    );
+      );
+    }
+
+    if (widget.isDim) {
+      return TapRegion(
+        onTapInside: (_) {
+          _lastTapWasInside = true;
+          animateOpacity();
+        },
+        onTapOutside: (_) {
+          _lastTapWasInside = false;
+          animateOpacity();
+        },
+        child: MouseRegion(
+          onEnter: (event) {
+            _mousePointerInArea = true;
+            animateOpacity();
+          },
+          onExit: (event) {
+            _mousePointerInArea = false;
+            animateOpacity();
+          },
+          child: child,
+        ),
+      );
+    }
+
+    return child;
+  }
+
+  void animateOpacity() {
+    if (_lastTapWasInside || _mousePointerInArea) {
+      _fadeAnimationController.animateTo(1.0);
+    } else {
+      _fadeAnimationController.animateTo(dimOpacity);
+    }
   }
 
   @override
