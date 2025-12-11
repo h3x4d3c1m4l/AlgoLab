@@ -24,6 +24,7 @@ dependencies:
   sketchy_design_lang: 0.2.0
   flutter_sketchy_text: 2.0.3
   linked_scroll_controller: 0.2.0
+  flutter_scroll_shadow: 1.2.6
 
   # MVC
   mobx: 2.5.0

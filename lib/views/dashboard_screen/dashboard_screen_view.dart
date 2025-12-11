@@ -3,6 +3,7 @@ import 'package:algolab/algorithms/sorting/bubble_sort.dart';
 import 'package:algolab/algorithms/sorting/selection_sort.dart';
 import 'package:algolab/algorithms/sorting/sort_algorithm.dart';
 import 'package:algolab/app_router.gr.dart';
+import 'package:algolab/extensions/build_context_extension.dart';
 import 'package:algolab/main.dart';
 import 'package:algolab/views/base/dialog_helper.dart';
 import 'package:algolab/views/base/screen_view_base.dart';
@@ -61,11 +62,17 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
             icon: Icon(LucideIcons.github),
             onPressed: onGitHubButtonPressed,
           ),
-          TextButton.icon(
-            onPressed: onAboutButtonPressed,
-            label: Text('About AlgoLab'),
-            icon: Icon(Icons.info_outline),
-          ),
+          if (context.isMobile)
+            IconButton(
+              onPressed: onAboutButtonPressed,
+              icon: Icon(Icons.info_outline),
+            )
+          else
+            TextButton.icon(
+              onPressed: onAboutButtonPressed,
+              label: Text('About AlgoLab'),
+              icon: Icon(Icons.info_outline),
+            ),
         ],
       ),
     );
