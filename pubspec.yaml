@@ -16,12 +16,12 @@ dependencies:
   flutter_svg: 2.2.3
   animated_text_kit: 4.3.0
   flutter_confetti: 0.5.1
-  lucide_icons_flutter: 3.1.7
+  lucide_icons_flutter: 3.1.8
   google_fonts: 6.3.3
   auto_route: 11.0.0
   animated_reorderable_list: 1.3.0
   flexible_wrap: 1.0.7
-  sketchy_design_lang: 0.2.0
+  sketchy_design_lang: 0.3.0
   flutter_sketchy_text: 2.0.3
   linked_scroll_controller: 0.2.0
   flutter_scroll_shadow: 1.2.6
