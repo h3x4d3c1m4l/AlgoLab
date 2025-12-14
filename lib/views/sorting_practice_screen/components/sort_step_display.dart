@@ -97,6 +97,8 @@ class _SortStepButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScrollShadow(
+      size: 8,
+      color: Colors.black26,
       child: SingleChildScrollView(
         key: ObjectKey(buttonsScrollController),
         scrollDirection: Axis.horizontal,

@@ -9,9 +9,11 @@ import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 class SortingPracticeScreenController extends ScreenControllerBase<SortingPracticeScreenViewModel> {
 
-  final ScrollController tableScrollController = ScrollController();
+  late final ScrollController stepsScrollController = ScrollController();
   final LinkedScrollControllerGroup buttonsScrollControllerGroup = LinkedScrollControllerGroup();
   final List<ScrollController> buttonsScrollControllers = [];
+
+  double _stepsTotalHeight = 0, _stepsScrollPosition = 0, _stepsGridScrollPosition = 0;
 
   // Initialization/Deinitialization
 
@@ -31,7 +33,7 @@ class SortingPracticeScreenController extends ScreenControllerBase<SortingPracti
       buttonsScrollControllers.add(buttonsScrollControllerGroup.addAndGet());
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      tableScrollController.animateTo(0, duration: Durations.medium1, curve: Curves.easeInOut);
+      stepsScrollController.animateTo(0, duration: Durations.medium1, curve: Curves.easeInOut);
     });
 
     if (viewModel.currentStep == viewModel.steps.length) {
@@ -53,9 +55,24 @@ class SortingPracticeScreenController extends ScreenControllerBase<SortingPracti
     }
   }
 
+  void onPossibleTableScrollNotification(Notification notification) {
+    switch (notification) {
+      case ScrollMetricsNotification metricsNotification when metricsNotification.metrics.hasViewportDimension:
+        _stepsTotalHeight = metricsNotification.metrics.viewportDimension + metricsNotification.metrics.maxScrollExtent;
+      case ScrollUpdateNotification updateNotification:
+        _stepsScrollPosition = updateNotification.metrics.pixels;
+    }
+
+    double stepsGridScrollPosition = -_stepsTotalHeight + _stepsScrollPosition;
+    if (stepsGridScrollPosition != _stepsGridScrollPosition) {
+      viewModel.setPaperGridScrollPosition(stepsGridScrollPosition);
+      _stepsGridScrollPosition = stepsGridScrollPosition;
+    }
+  }
+
   @override
   void dispose() {
-    tableScrollController.dispose();
+    stepsScrollController.dispose();
     for (ScrollController c in buttonsScrollControllers) {
       c.dispose();
     }

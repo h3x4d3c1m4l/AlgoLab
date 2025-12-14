@@ -6,6 +6,7 @@ class AlgoLabScaffold extends StatelessWidget {
   final Widget? appBarLeading;
   final Widget? appBarMiddle;
   final Widget? appBarTrailing;
+  final Widget? bodyBackground;
   final Widget body;
   final EdgeInsets? bodyPadding;
   final Widget? bottomBarLeading;
@@ -17,6 +18,7 @@ class AlgoLabScaffold extends StatelessWidget {
     this.appBarLeading,
     this.appBarMiddle,
     this.appBarTrailing,
+    this.bodyBackground,
     required this.body,
     this.bodyPadding = const EdgeInsets.symmetric(horizontal: 16),
     this.bottomBarLeading,
@@ -28,9 +30,15 @@ class AlgoLabScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(location: _AppBarLocation.top, leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing),
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Container(padding: bodyPadding, width: 1200, child: body),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          if (bodyBackground != null) bodyBackground!,
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(padding: bodyPadding, width: 1200, child: body),
+          ),
+        ],
       ),
       bottomNavigationBar: _AppBar(location: _AppBarLocation.bottom, leading: bottomBarLeading, middle: bottomBarMiddle, trailing: bottomBarTrailing),
     );

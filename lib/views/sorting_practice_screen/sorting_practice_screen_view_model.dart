@@ -30,6 +30,9 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
   @computed
   String get swapCounter => 'Step ${_stepViewModels.last.swapIndex ?? totalSwapCount} / $totalSwapCount';
 
+  @readonly
+  double _paperGridScrollPosition = 0;
+
   SortingPracticeScreenViewModelBase({
     required super.contextAccessor,
     required this.algorithm,
@@ -123,5 +126,7 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
           .add(_stepViewModels[_stepViewModels.length - 1].copyWith(key: UniqueKey(), highlightedIndices: const ISetConst({}), type: null));
     }
   }
+
+  void setPaperGridScrollPosition(double position) => _paperGridScrollPosition = position;
 
 }

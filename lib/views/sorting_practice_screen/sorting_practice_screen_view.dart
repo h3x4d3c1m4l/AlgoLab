@@ -4,7 +4,7 @@ import 'package:algolab/views/base/dialog_helper.dart';
 import 'package:algolab/views/base/screen_view_base.dart';
 import 'package:algolab/views/components/algo_lab_scaffold.dart';
 import 'package:algolab/views/components/containers/animated_appearance.dart';
-import 'package:algolab/views/components/containers/custom_paper_grid.dart';
+import 'package:algolab/views/components/containers/scrolling_paper_grid.dart';
 import 'package:algolab/views/components/dialogs/cancel_exercise_dialog.dart';
 import 'package:algolab/views/sorting_practice_screen/components/sort_step_display.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_controller.dart';
@@ -30,47 +30,54 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.titleMedium,
       ),
+      bodyBackground: Observer(
+        builder: (context) => ScrollingPaperGrid(
+          scrollOffset: viewModel.paperGridScrollPosition,
+        ),
+      ),
       bodyPadding: EdgeInsets.zero,
-      body: CustomPaperGrid(
-        child: Observer(
-          builder: (context) {
-            return Align(
-              alignment: AlignmentGeometry.bottomCenter,
-              child: ScrollShadow(
-                size: 16,
-                color: Colors.black26,
-                child: SingleChildScrollView(
-                  reverse: true,
-                  controller: controller.tableScrollController,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Column(
-                    children: viewModel.stepViewModels.mapIndexed((i, step) {
-                      String? leadingText;
-                      if (step.type == SortStepType.endResult) {
-                        leadingText = 'End result';
-                      } else if (step.swapIndex == null) {
-                        leadingText = 'Comparison';
-                      } else if (step.type == SortStepType.correctSwap || i == viewModel.stepViewModels.length - 1) {
-                        leadingText = 'Swap ${step.swapIndex}';
-                      }
+      body: Align(
+        alignment: AlignmentGeometry.bottomCenter,
+        child: ScrollShadow(
+          size: 16,
+          color: Colors.black26,
+          child: NotificationListener<Notification>(
+            onNotification: (notification) {
+              controller.onPossibleTableScrollNotification(notification);
+              return false;
+            },
+            child: SingleChildScrollView(
+              reverse: true,
+              controller: controller.stepsScrollController,
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Observer(
+                builder: (context) => Column(
+                  children: viewModel.stepViewModels.mapIndexed((i, step) {
+                    String? leadingText;
+                    if (step.type == SortStepType.endResult) {
+                      leadingText = 'End result';
+                    } else if (step.swapIndex == null) {
+                      leadingText = 'Comparison';
+                    } else if (step.type == SortStepType.correctSwap || i == viewModel.stepViewModels.length - 1) {
+                      leadingText = 'Swap ${step.swapIndex}';
+                    }
 
-                      return AnimatedAppearance(
-                        key: step.key,
-                        isDim: step.type == SortStepType.compare,
-                        animateSize: i != 0,
-                        child: SortStepDisplay(
-                          leading: leadingText,
-                          viewModel: step,
-                          buttonsScrollController: controller.buttonsScrollControllers[i],
-                          onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                    return AnimatedAppearance(
+                      key: step.key,
+                      isDim: step.type == SortStepType.compare,
+                      animateSize: i != 0,
+                      child: SortStepDisplay(
+                        leading: leadingText,
+                        viewModel: step,
+                        buttonsScrollController: controller.buttonsScrollControllers[i],
+                        onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
-            );
-          },
+            ),
+          ),
         ),
       ),
       bottomBarLeading: Row(
