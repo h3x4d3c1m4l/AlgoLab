@@ -7,20 +7,30 @@ class AlgoLabScaffold extends StatelessWidget {
   final Widget? appBarMiddle;
   final Widget? appBarTrailing;
   final Widget body;
+  final EdgeInsets? bodyPadding;
   final Widget? bottomBarLeading;
   final Widget? bottomBarMiddle;
   final Widget? bottomBarTrailing;
 
-  const AlgoLabScaffold({super.key, this.appBarLeading, this.appBarMiddle, this.appBarTrailing, required this.body, this.bottomBarLeading, this.bottomBarMiddle, this.bottomBarTrailing});
+  const AlgoLabScaffold({
+    super.key,
+    this.appBarLeading,
+    this.appBarMiddle,
+    this.appBarTrailing,
+    required this.body,
+    this.bodyPadding = const EdgeInsets.symmetric(horizontal: 16),
+    this.bottomBarLeading,
+    this.bottomBarMiddle,
+    this.bottomBarTrailing,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(location: _AppBarLocation.top, leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing),
-      body: Container(
+      body: Align(
         alignment: Alignment.topCenter,
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: SizedBox(width: 1200, child: body),
+        child: Container(padding: bodyPadding, width: 1200, child: body),
       ),
       bottomNavigationBar: _AppBar(location: _AppBarLocation.bottom, leading: bottomBarLeading, middle: bottomBarMiddle, trailing: bottomBarTrailing),
     );

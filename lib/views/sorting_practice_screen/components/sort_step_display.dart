@@ -51,7 +51,7 @@ class _SortStepDisplayState extends State<SortStepDisplay> {
             return Column(
               spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [if (startText != null) startText, buttons],
+              children: [if (startText != null) Padding(padding: EdgeInsets.only(left: 16), child: startText), buttons],
             );
           } else {
             // Tablet, laptop, desktop, ...
@@ -101,6 +101,7 @@ class _SortStepButtons extends StatelessWidget {
         key: ObjectKey(buttonsScrollController),
         scrollDirection: Axis.horizontal,
         controller: buttonsScrollController,
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: SegmentedButton(
           segments: viewModel.currentValues.mapIndexed((index, element) {
             return ButtonSegment(value: index, label: Text('$element'));
@@ -114,6 +115,7 @@ class _SortStepButtons extends StatelessWidget {
                 : viewModel.type == SortStepType.incorrectSwap
                 ? Colors.red
                 : Colors.yellow,
+            backgroundColor: Colors.white,
           ),
           showSelectedIcon: false,
           onSelectionChanged: (indicesSet) {
