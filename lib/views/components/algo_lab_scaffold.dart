@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sketchy_design_lang/sketchy_design_lang.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 
 class AlgoLabScaffold extends StatelessWidget {
 
@@ -30,15 +30,19 @@ class AlgoLabScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(location: _AppBarLocation.top, leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing),
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          if (bodyBackground != null) bodyBackground!,
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(padding: bodyPadding, width: 1200, child: body),
-          ),
-        ],
+      body: ScrollShadow(
+        size: 16,
+        color: Colors.black26,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            if (bodyBackground != null) bodyBackground!,
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(padding: bodyPadding, width: 1200, child: body),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: _AppBar(location: _AppBarLocation.bottom, leading: bottomBarLeading, middle: bottomBarMiddle, trailing: bottomBarTrailing),
     );
@@ -57,7 +61,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const _AppBar({required this.location, this.leading, this.middle, this.trailing});
 
-  double get _height => location == _AppBarLocation.top ? 70 : 86;
+  double get _height => location == _AppBarLocation.top ? 78 : 86;
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +69,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (location == _AppBarLocation.top) const SizedBox(height: 6),
-        if (location == _AppBarLocation.bottom) SketchyDivider(),
+        if (location == _AppBarLocation.bottom) Divider(height: 1),
         Container(
           height: _height - 16 - 6,
           alignment: Alignment.center,
@@ -80,8 +83,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
-        if (location == _AppBarLocation.top) SketchyDivider(),
-        if (location == _AppBarLocation.bottom) const SizedBox(height: 6),
+        if (location == _AppBarLocation.top) Divider(height: 1),
+        if (location == _AppBarLocation.bottom) const SizedBox(height: 2),
       ],
     );
   }

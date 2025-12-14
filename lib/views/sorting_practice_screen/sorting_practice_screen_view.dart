@@ -12,7 +12,6 @@ import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_vi
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 
 class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenViewModel, SortingPracticeScreenController> {
 
@@ -38,43 +37,39 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
       bodyPadding: EdgeInsets.zero,
       body: Align(
         alignment: AlignmentGeometry.bottomCenter,
-        child: ScrollShadow(
-          size: 16,
-          color: Colors.black26,
-          child: NotificationListener<Notification>(
-            onNotification: (notification) {
-              controller.onPossibleTableScrollNotification(notification);
-              return false;
-            },
-            child: SingleChildScrollView(
-              reverse: true,
-              controller: controller.stepsScrollController,
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: Observer(
-                builder: (context) => Column(
-                  children: viewModel.stepViewModels.mapIndexed((i, step) {
-                    String? leadingText;
-                    if (step.type == SortStepType.endResult) {
-                      leadingText = 'End result';
-                    } else if (step.swapIndex == null) {
-                      leadingText = 'Comparison';
-                    } else if (step.type == SortStepType.correctSwap || i == viewModel.stepViewModels.length - 1) {
-                      leadingText = 'Swap ${step.swapIndex}';
-                    }
+        child: NotificationListener<Notification>(
+          onNotification: (notification) {
+            controller.onPossibleTableScrollNotification(notification);
+            return false;
+          },
+          child: SingleChildScrollView(
+            reverse: true,
+            controller: controller.stepsScrollController,
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Observer(
+              builder: (context) => Column(
+                children: viewModel.stepViewModels.mapIndexed((i, step) {
+                  String? leadingText;
+                  if (step.type == SortStepType.endResult) {
+                    leadingText = 'End result';
+                  } else if (step.swapIndex == null) {
+                    leadingText = 'Comparison';
+                  } else if (step.type == SortStepType.correctSwap || i == viewModel.stepViewModels.length - 1) {
+                    leadingText = 'Swap ${step.swapIndex}';
+                  }
 
-                    return AnimatedAppearance(
-                      key: step.key,
-                      isDim: step.type == SortStepType.compare,
-                      animateSize: i != 0,
-                      child: SortStepDisplay(
-                        leading: leadingText,
-                        viewModel: step,
-                        buttonsScrollController: controller.buttonsScrollControllers[i],
-                        onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
-                      ),
-                    );
-                  }).toList(),
-                ),
+                  return AnimatedAppearance(
+                    key: step.key,
+                    isDim: step.type == SortStepType.compare,
+                    animateSize: i != 0,
+                    child: SortStepDisplay(
+                      leading: leadingText,
+                      viewModel: step,
+                      buttonsScrollController: controller.buttonsScrollControllers[i],
+                      onSelectedIndicesChanged: controller.onSelectedIndicesChanged,
+                    ),
+                  );
+                }).toList(),
               ),
             ),
           ),
