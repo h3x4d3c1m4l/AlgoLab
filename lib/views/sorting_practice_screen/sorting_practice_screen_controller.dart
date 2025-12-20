@@ -36,7 +36,7 @@ class SortingPracticeScreenController extends ScreenControllerBase<SortingPracti
       stepsScrollController.animateTo(0, duration: Durations.medium1, curve: Curves.easeInOut);
     });
 
-    if (viewModel.currentStep == viewModel.steps.length) {
+    if (viewModel.finished) {
       showAlgoLabDialog(
         context: contextAccessor.buildContext,
         barrierDismissible: false,

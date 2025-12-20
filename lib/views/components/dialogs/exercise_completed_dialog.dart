@@ -9,7 +9,7 @@ class ExerciseCompletedDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text("Exercise completed"),
-      content: Text("You have successfully completed the exercise!\n\nWould you like to practise again with a new set of numbers or go back to the main menu?"),
+      content: Text("You have successfully completed the exercise!\n\nWould you like to practise again with a new set of numbers, take a longer look at the steps you have taken or go back to the main menu?"),
       actions: [
         TextButton.icon(
           onPressed: () {
@@ -17,10 +17,15 @@ class ExerciseCompletedDialog extends StatelessWidget {
           icon: Icon(Icons.replay),
           label: Text('Practise again'),
         ),
+        TextButton.icon(
+          onPressed: () => context.pop(),
+          icon: Icon(Icons.visibility),
+          label: Text('View steps'),
+        ),
         FilledButton.icon(
           onPressed: () => context..pop()..pop(),
           icon: Icon(Icons.home),
-          label: Text('To main menu'),
+          label: Text('Go home'),
         ),
       ],
     );

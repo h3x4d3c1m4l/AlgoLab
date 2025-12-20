@@ -33,6 +33,9 @@ abstract class SortingPracticeScreenViewModelBase extends ScreenViewModelBase wi
   @readonly
   double _paperGridScrollPosition = 0;
 
+  @computed
+  bool get finished => _currentStep == steps.length;
+
   SortingPracticeScreenViewModelBase({
     required super.contextAccessor,
     required this.algorithm,

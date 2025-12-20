@@ -36,7 +36,10 @@ class AlgoLabTheme {
     )),
     outlinedButtonTheme: OutlinedButtonThemeData(style: OutlinedButton.styleFrom(
       padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      shape: ContinuousRectangleBorder(borderRadius: BorderRadiusGeometry.circular(32)),
+      side: BorderSide(color: primaryColor),
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadiusGeometry.circular(32),
+      ),
     )),
     textButtonTheme: TextButtonThemeData(style: TextButton.styleFrom(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),

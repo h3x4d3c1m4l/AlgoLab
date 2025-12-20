@@ -9,6 +9,7 @@ import 'package:algolab/views/components/dialogs/cancel_exercise_dialog.dart';
 import 'package:algolab/views/sorting_practice_screen/components/sort_step_display.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_controller.dart';
 import 'package:algolab/views/sorting_practice_screen/sorting_practice_screen_view_model.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -75,34 +76,56 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
           ),
         ),
       ),
-      bottomBarLeading: Row(
-        children: [
-          if (context.isMobile)
-            IconButton(
-              onPressed: () => showAlgoLabDialog(context: context, builder: (_) => CancelExerciseDialog()),
-              style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
-              icon: Icon(Icons.arrow_back),
-            ),
-          Text(
-            '${context.isMobile ? '' : 'Practicing: '}${viewModel.algorithm.name}',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ],
+      bottomBarLeading: Observer(
+        builder: (context) {
+          return Row(
+            children: [
+              if (context.isMobile && !viewModel.finished)
+                IconButton(
+                  onPressed: () => showAlgoLabDialog(context: context, builder: (_) => CancelExerciseDialog()),
+                  style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
+                  icon: Icon(Icons.arrow_back),
+                )
+              else if (context.isMobile && viewModel.finished)
+                IconButton(
+                  onPressed: () => context.pop(),
+                  icon: Icon(Icons.home),
+                ),
+
+              Text(
+                '${context.isMobile ? '' : 'Practicing: '}${viewModel.algorithm.name}',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ],
+          );
+        }
       ),
-      bottomBarTrailing: Row(
-        spacing: 16,
-        children: [
-          Observer(
-            builder: (context) => Text(viewModel.swapCounter, style: Theme.of(context).textTheme.titleLarge),
-          ),
-          if (!context.isMobile)
-            ElevatedButton.icon(
-              onPressed: () => showAlgoLabDialog(context: context, builder: (_) => CancelExerciseDialog()),
-              style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
-              icon: Icon(Icons.close),
-              label: Text('Stop'),
-            ),
-        ],
+      bottomBarTrailing: Observer(
+        builder: (context) {
+          return Row(
+            spacing: 16,
+            children: [
+              if (!viewModel.finished)
+                Text(viewModel.swapCounter, style: Theme.of(context).textTheme.titleLarge)
+              else
+                Text("You have finished!", style: Theme.of(context).textTheme.titleLarge),
+
+              if (!context.isMobile && !viewModel.finished)
+                ElevatedButton.icon(
+                  onPressed: () => showAlgoLabDialog(context: context, builder: (_) => CancelExerciseDialog()),
+                  style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
+                  icon: Icon(Icons.close),
+                  label: Text('Stop'),
+                )
+              else if (!context.isMobile && viewModel.finished)
+                ElevatedButton.icon(
+                  onPressed: () => context.pop(),
+                  icon: Icon(Icons.home),
+                  label: Text('Go home'),
+                ),
+            ],
+          );
+        }
       ),
       bottomBarPadding: context.isMobile ? EdgeInsets.only(right: 20) : EdgeInsets.zero,
     );
