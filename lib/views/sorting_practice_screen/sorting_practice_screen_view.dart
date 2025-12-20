@@ -90,7 +90,7 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
         ],
       ),
       bottomBarTrailing: Row(
-        spacing: 32,
+        spacing: 16,
         children: [
           Observer(
             builder: (context) => Text(viewModel.swapCounter, style: Theme.of(context).textTheme.titleLarge),
@@ -101,11 +101,10 @@ class SortingPracticeScreenView extends ScreenViewBase<SortingPracticeScreenView
               style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
               icon: Icon(Icons.close),
               label: Text('Stop'),
-            )
-          else
-            const SizedBox(width: 0),
+            ),
         ],
       ),
+      bottomBarPadding: context.isMobile ? EdgeInsets.only(right: 20) : EdgeInsets.zero,
     );
   }
 

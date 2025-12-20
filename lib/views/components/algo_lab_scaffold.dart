@@ -6,30 +6,34 @@ class AlgoLabScaffold extends StatelessWidget {
   final Widget? appBarLeading;
   final Widget? appBarMiddle;
   final Widget? appBarTrailing;
+  final EdgeInsets appBarPadding;
   final Widget? bodyBackground;
   final Widget body;
-  final EdgeInsets? bodyPadding;
+  final EdgeInsets bodyPadding;
   final Widget? bottomBarLeading;
   final Widget? bottomBarMiddle;
   final Widget? bottomBarTrailing;
+  final EdgeInsets bottomBarPadding;
 
   const AlgoLabScaffold({
     super.key,
     this.appBarLeading,
     this.appBarMiddle,
     this.appBarTrailing,
+    this.appBarPadding = EdgeInsets.zero,
     this.bodyBackground,
     required this.body,
     this.bodyPadding = const EdgeInsets.symmetric(horizontal: 16),
     this.bottomBarLeading,
     this.bottomBarMiddle,
     this.bottomBarTrailing,
+    this.bottomBarPadding = EdgeInsets.zero,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(location: _AppBarLocation.top, leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing),
+      appBar: _AppBar(location: _AppBarLocation.top, leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing, padding: appBarPadding),
       body: ScrollShadow(
         size: 16,
         color: Colors.black26,
@@ -44,7 +48,7 @@ class AlgoLabScaffold extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: _AppBar(location: _AppBarLocation.bottom, leading: bottomBarLeading, middle: bottomBarMiddle, trailing: bottomBarTrailing),
+      bottomNavigationBar: _AppBar(location: _AppBarLocation.bottom, leading: bottomBarLeading, middle: bottomBarMiddle, trailing: bottomBarTrailing, padding: bottomBarPadding),
     );
   }
 
@@ -55,11 +59,12 @@ enum _AppBarLocation { top, bottom }
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final _AppBarLocation location;
+  final EdgeInsets padding;
   final Widget? leading;
   final Widget? middle;
   final Widget? trailing;
 
-  const _AppBar({required this.location, this.leading, this.middle, this.trailing});
+  const _AppBar({required this.location, required this.padding, this.leading, this.middle, this.trailing});
 
   double get _height => location == _AppBarLocation.top ? 78 : 86;
 
@@ -73,6 +78,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
         Container(
           height: _height - 16 - 6,
           alignment: Alignment.center,
+          padding: padding,
           child: Container(
             width: 1200,
             padding: EdgeInsets.symmetric(horizontal: 16),

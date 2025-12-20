@@ -75,6 +75,7 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
             ),
         ],
       ),
+      bottomBarPadding: context.isMobile ? EdgeInsets.fromLTRB(16, 0, 8, 0) : EdgeInsets.zero,
     );
   }
 

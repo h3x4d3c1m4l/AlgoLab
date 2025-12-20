@@ -23,6 +23,7 @@ dependencies:
   flexible_wrap: 1.0.7
   linked_scroll_controller: 0.2.0
   flutter_scroll_shadow: 1.2.6
+  simple_animations: 5.2.0
 
   # MVC
   mobx: 2.5.0
