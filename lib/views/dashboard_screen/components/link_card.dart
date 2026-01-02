@@ -20,29 +20,25 @@ class LinkCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.fromLTRB(16, 24, 32, 24),
           width: 350,
-          child: Column(
+          child: Row(
+            spacing: 16,
             children: [
-              Row(
-                spacing: 16,
-                children: [
-                  Icon(icon, size: 96, color: context.theme.colorScheme.primary),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 8,
-                      children: [
-                        Text(title, style: context.theme.textTheme.titleLarge),
-                        Text(description, maxLines: 2, overflow: TextOverflow.ellipsis),
-                        Text(
-                          externalUrl,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.theme.textTheme.labelSmall!.copyWith(decoration: TextDecoration.underline),
-                        ),
-                      ],
+              Icon(icon, size: 96, color: context.theme.colorScheme.primary),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 8,
+                  children: [
+                    Text(title, style: context.theme.textTheme.titleLarge),
+                    Text(description, maxLines: 2, overflow: TextOverflow.ellipsis),
+                    Text(
+                      externalUrl,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.theme.textTheme.labelSmall!.copyWith(decoration: TextDecoration.underline),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
