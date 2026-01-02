@@ -9,10 +9,11 @@ import 'package:algolab/views/base/dialog_helper.dart';
 import 'package:algolab/views/base/screen_view_base.dart';
 import 'package:algolab/views/components/algo_lab_scaffold.dart';
 import 'package:algolab/views/dashboard_screen/components/algorithm_card.dart';
+import 'package:algolab/views/dashboard_screen/components/dashboard_section.dart';
+import 'package:algolab/views/dashboard_screen/components/link_card.dart';
 import 'package:algolab/views/dashboard_screen/dashboard_screen_controller.dart';
 import 'package:algolab/views/dashboard_screen/dashboard_screen_view_model.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flexible_wrap/flexible_wrap.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -35,20 +36,22 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
           children: [
             Text('Welcome!', style: theme.textTheme.headlineSmall),
             const SizedBox(height: 32),
-            Row(
-              spacing: 16,
-              children: [
-                Icon(Icons.sort),
-                Text('Sorting algorithms', style: theme.textTheme.headlineMedium),
-              ],
-            ),
-            const SizedBox(height: 16),
-            FlexibleWrap(
-              spacing: 8,
-              runSpacing: 16,
-              children: [
+            DashboardSection(
+              icon: Icons.sort,
+              title: 'Sorting algorithms',
+              bodyCards: [
                 AlgorithmCard(algorithm: const BubbleSort(), onTap: () => onCardTapped(const BubbleSort())),
                 AlgorithmCard(algorithm: const SelectionSort(), onTap: () => onCardTapped(const SelectionSort())),
+              ],
+            ),
+            const SizedBox(height: 64),
+            DashboardSection(
+              icon: Icons.link,
+              title: 'Other awesome interactive learning tools',
+              bodyCards: [
+                LinkCard(icon: Icons.camera, title: 'Cameras and Lenses', description: 'Learn about cameras, lenses, aperture, focus and more.', externalUrl: 'https://ciechanow.ski/cameras-and-lenses/'),
+                LinkCard(icon: Icons.web, title: 'Load Balancing', description: 'Learn how incoming HTTP requests are distributed.', externalUrl: 'https://samwho.dev/load-balancing/'),
+                LinkCard(icon: Icons.navigation, title: 'GPS', description: 'Learn how GPS helps you find out where you are.', externalUrl: 'https://ciechanow.ski/gps/'),
               ],
             ),
           ],
