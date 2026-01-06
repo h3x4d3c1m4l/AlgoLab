@@ -31,6 +31,7 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
   Widget get body {
     return AlgoLabScaffold(
       body: SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(0, 72, 0, 32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

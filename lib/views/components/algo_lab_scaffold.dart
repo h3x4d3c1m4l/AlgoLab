@@ -33,7 +33,15 @@ class AlgoLabScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(location: _AppBarLocation.top, leading: appBarLeading, middle: appBarMiddle, trailing: appBarTrailing, padding: appBarPadding),
+      appBar: appBarLeading != null || appBarMiddle != null || appBarTrailing != null
+          ? _AppBar(
+              location: _AppBarLocation.top,
+              leading: appBarLeading,
+              middle: appBarMiddle,
+              trailing: appBarTrailing,
+              padding: appBarPadding,
+            )
+          : null,
       body: ScrollShadow(
         size: 16,
         color: Colors.black26,
