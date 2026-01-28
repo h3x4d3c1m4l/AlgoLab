@@ -54,6 +54,7 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
                 LinkCard(icon: Icons.web, title: 'Load Balancing', description: 'Learn how incoming HTTP requests are distributed.', externalUrl: 'https://samwho.dev/load-balancing/'),
                 LinkCard(icon: Icons.navigation, title: 'GPS', description: 'Learn how GPS helps you find out where you are.', externalUrl: 'https://ciechanow.ski/gps/'),
                 LinkCard(icon: Icons.style, title: 'CSS Selectors', description: 'Learn how to use CSS Selectors to improve your web dev skills.', externalUrl: 'https://flukeout.github.io/'),
+                LinkCard(icon: Icons.airplanemode_active, title: 'Airfoil', description: 'Learn about the forces that make airplanes fly.', externalUrl: 'https://ciechanow.ski/airfoil/'),
               ],
             ),
           ],
