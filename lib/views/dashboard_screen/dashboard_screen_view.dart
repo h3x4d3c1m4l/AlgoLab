@@ -55,6 +55,7 @@ class DashboardScreenView extends ScreenViewBase<DashboardScreenViewModel, Dashb
                 LinkCard(icon: Icons.navigation, title: 'GPS', description: 'Learn how GPS helps you find out where you are.', externalUrl: 'https://ciechanow.ski/gps/'),
                 LinkCard(icon: Icons.style, title: 'CSS Selectors', description: 'Learn how to use CSS Selectors to improve your web dev skills.', externalUrl: 'https://flukeout.github.io/'),
                 LinkCard(icon: Icons.airplanemode_active, title: 'Airfoil', description: 'Learn about the forces that make airplanes fly.', externalUrl: 'https://ciechanow.ski/airfoil/'),
+                LinkCard(icon: Icons.remove_red_eye, title: 'Optical Illusions', description: 'Learn about optical illusions and how they trick your brain.', externalUrl: 'https://optical.toys/'),
               ],
             ),
           ],
