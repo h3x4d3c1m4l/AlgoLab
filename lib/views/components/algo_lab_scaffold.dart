@@ -48,7 +48,7 @@ class AlgoLabScaffold extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            if (bodyBackground != null) bodyBackground!,
+            ?bodyBackground,
             Align(
               alignment: Alignment.topCenter,
               child: Container(padding: bodyPadding, width: 1200, child: body),
